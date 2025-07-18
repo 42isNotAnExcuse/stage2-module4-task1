@@ -7,14 +7,13 @@ import java.sql.Statement;
 public class H2TestSetup {
 
     public static void initializeSchema() {
-        String createTableSQL = """
-                    CREATE TABLE IF NOT EXISTS myusers (
-                        id IDENTITY PRIMARY KEY,
-                        firstname VARCHAR(255),
-                        lastname VARCHAR(255),
-                        age INT
-                    )
-                """;
+        String createTableSQL =
+                "CREATE TABLE IF NOT EXISTS myusers ("
+                        + " id IDENTITY PRIMARY KEY,"
+                        + " firstname VARCHAR(255),"
+                        + " lastname VARCHAR(255),"
+                        + " age INT"
+                        + " )";
 
         try (Connection conn = H2ConnectionFactory.getInstance().createConnection();
              Statement stmt = conn.createStatement()) {
