@@ -69,6 +69,20 @@ public class Employee {
     }
 
     public static class EmployeeBuilder {
-        // Write your code here!
+        private Employee employee;
+
+        public void initEmployee(String name, String lastName, String position, String phone, String email, String carNumber) {
+            this.employee = new Employee();
+            this.employee.setName(name);
+            this.employee.setLastName(lastName);
+            this.employee.setEmail(email);
+            this.employee.setPhone(phone);
+            this.employee.setPosition(position);
+            this.employee.setCarNumber(carNumber);
+        }
+
+        public Employee getEmployee() {
+            return this.employee;
+        }
     }
 }
