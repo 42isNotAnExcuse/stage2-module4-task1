@@ -15,7 +15,7 @@ public class H2TestSetup {
                         + " age INT"
                         + " )";
 
-        try (Connection conn = H2ConnectionFactory.getInstance().createConnection();
+        try (Connection conn = new H2ConnectionFactory().createConnection();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(createTableSQL);

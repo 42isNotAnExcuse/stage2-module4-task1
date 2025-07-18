@@ -5,22 +5,20 @@ import com.mjc.stage2.ConnectionFactory;
 import java.sql.Connection;
 
 public class H2ConnectionFactory implements ConnectionFactory {
-
-    private static volatile H2ConnectionFactory instance;
     private final String driver;
     private final String url;
     private final String name;
     private final String password;
 
+    private final CustomConnector connector;
 
-    AppProperties properties = new AppProperties();
-    private final CustomConnector connector = new CustomConnector();
-
-    private H2ConnectionFactory() {
+    public H2ConnectionFactory() {
+        AppProperties properties = new AppProperties();
         this.driver = properties.getDriver();
         this.url = properties.getUrl();
         this.password = properties.getPassword();
         this.name = properties.getUserName();
+        this.connector = new CustomConnector();
 
         try {
             Class.forName(driver);
@@ -29,19 +27,8 @@ public class H2ConnectionFactory implements ConnectionFactory {
         }
     }
 
-    public static H2ConnectionFactory getInstance() {
-        if (instance == null) {
-            synchronized (H2ConnectionFactory.class) {
-                if (instance == null) {
-                    instance = new H2ConnectionFactory();
-                }
-            }
-        }
-        return instance;
-    }
-
+    @Override
     public Connection createConnection() {
         return connector.getConnection(url, name, password);
     }
 }
-
