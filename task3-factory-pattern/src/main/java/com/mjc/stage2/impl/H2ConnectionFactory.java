@@ -12,13 +12,15 @@ public class H2ConnectionFactory implements ConnectionFactory {
     private final String name;
     private final String password;
 
+
+    AppProperties properties = new AppProperties();
     private final CustomConnector connector = new CustomConnector();
 
-    private H2ConnectionFactory(String driver, String url, String password, String name) {
-        this.driver = driver;
-        this.url = url;
-        this.password = password;
-        this.name = name;
+    private H2ConnectionFactory() {
+        this.driver = properties.getDriver();
+        this.url = properties.getUrl();
+        this.password = properties.getPassword();
+        this.name = properties.getUserName();
 
         try {
             Class.forName(driver);
@@ -31,13 +33,7 @@ public class H2ConnectionFactory implements ConnectionFactory {
         if (instance == null) {
             synchronized (H2ConnectionFactory.class) {
                 if (instance == null) {
-                    AppProperties properties = new AppProperties();
-                    instance = new H2ConnectionFactory(
-                            properties.getDriver(),
-                            properties.getUrl(),
-                            properties.getPassword(),
-                            properties.getUserName()
-                    );
+                    instance = new H2ConnectionFactory();
                 }
             }
         }
